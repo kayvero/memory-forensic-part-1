@@ -245,6 +245,69 @@ vol -f MemoryDump.mem windows.dlllist --pid 5896 | grep -Ei "\.dll"
 
 ---
 
+## File Artifacts
+
+| Perintah / Plugin                | Fungsi                                                             |
+| -------------------------------- | ------------------------------------------------------------------ |
+| `windows.filescan`               | Scan memory untuk menemukan objek file yang masih memiliki artefak |
+| `windows.dumpfiles`              | Dump file/cache file yang ditemukan dari memory                    |
+| `windows.filescan \| grep`       | Filter hasil berdasarkan nama/path file                            |
+| `strings MemoryDump.mem \| grep` | Mencari nama/path/file artifact dari string memory                 |
+| `windows.memmap`                 | Melihat mapping memory suatu proses                                |
+| `windows.vadwalk`                | Menelusuri VAD/memory region secara lebih detail                   |
+
+**Penjelasan:**
+Digunakan untuk mencari file atau objek file yang masih meninggalkan artefak di memory.
+
+**Penerapan umum:**
+
+```bash
+vol -f MemoryDump.mem windows.filescan
+````
+
+**Penerapan spesifik:**
+
+```bash
+vol -f MemoryDump.mem windows.filescan | grep -Ei "\.exe|\.dll|\.php"
+```
+
+Mencari file tertentu:
+
+```bash
+vol -f MemoryDump.mem windows.filescan | grep "oneetx.exe"
+```
+
+| Column      | Penjelasan                             |
+| ----------- | -------------------------------------- |
+| Offset      | Alamat object file di memory           |
+| Name        | Nama/path file                         |
+| File output | Nama file hasil dumping jika dilakukan |
+
+Dan untuk dumping:
+
+## `windows.dumpfiles`
+
+**Penjelasan:**
+Digunakan untuk mencoba mengambil file/cache file yang ditemukan dari memory.
+
+**Penerapan umum:**
+
+```bash
+vol -f MemoryDump.mem windows.dumpfiles
+````
+
+**Penerapan spesifik:**
+
+```bash
+vol -f MemoryDump.mem windows.dumpfiles --virtaddr <OFFSET>
+```
+
+| Parameter    | Penjelasan                                     |
+| ------------ | ---------------------------------------------- |
+| `--virtaddr` | Virtual address object file yang ingin di-dump |
+
+---
+
 ## 8. `windows.vadinfo`
 
 **Penjelasan:**
