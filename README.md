@@ -1,4 +1,3 @@
-````markdown
 # Memory Forensics A-Z — Volatility 3
 
 ## 1. `windows.info`
